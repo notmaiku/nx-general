@@ -1,0 +1,57 @@
+{
+  "name": "board",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/board/.nitro",
+        "{workspaceRoot}/dist/board/ssr",
+        "{workspaceRoot}/dist/board/analog"
+      ],
+      "options": {
+        "main": "board/src/main.ts",
+        "configFile": "board/vite.config.ts",
+        "outputPath": "dist/board/client",
+        "tsConfig": "board/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "board:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "board:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "board:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./board/src"
+}
