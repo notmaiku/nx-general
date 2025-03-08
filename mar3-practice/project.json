@@ -1,0 +1,55 @@
+{
+  "name": "mar3-practice",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/mar3-practice/.nitro",
+        "{workspaceRoot}/dist/mar3-practice/ssr",
+        "{workspaceRoot}/dist/mar3-practice/analog"
+      ],
+      "options": {
+        "main": "mar3-practice/src/main.ts",
+        "configFile": "mar3-practice/vite.config.ts",
+        "outputPath": "dist/mar3-practice/client",
+        "tsConfig": "mar3-practice/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mar3-practice:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mar3-practice:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "mar3-practice:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./mar3-practice/src"
+}

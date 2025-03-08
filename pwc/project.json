@@ -1,0 +1,55 @@
+{
+  "name": "pwc",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/pwc/.nitro",
+        "{workspaceRoot}/dist/pwc/ssr",
+        "{workspaceRoot}/dist/pwc/analog"
+      ],
+      "options": {
+        "main": "pwc/src/main.ts",
+        "configFile": "pwc/vite.config.ts",
+        "outputPath": "dist/pwc/client",
+        "tsConfig": "pwc/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pwc:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pwc:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "pwc:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./pwc/src"
+}

@@ -1,0 +1,55 @@
+{
+  "name": "reddmar3",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/reddmar3/.nitro",
+        "{workspaceRoot}/dist/reddmar3/ssr",
+        "{workspaceRoot}/dist/reddmar3/analog"
+      ],
+      "options": {
+        "main": "reddmar3/src/main.ts",
+        "configFile": "reddmar3/vite.config.ts",
+        "outputPath": "dist/reddmar3/client",
+        "tsConfig": "reddmar3/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "reddmar3:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "reddmar3:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "reddmar3:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./reddmar3/src"
+}

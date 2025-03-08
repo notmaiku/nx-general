@@ -1,0 +1,55 @@
+{
+  "name": "mar4",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/mar4/.nitro",
+        "{workspaceRoot}/dist/mar4/ssr",
+        "{workspaceRoot}/dist/mar4/analog"
+      ],
+      "options": {
+        "main": "mar4/src/main.ts",
+        "configFile": "mar4/vite.config.ts",
+        "outputPath": "dist/mar4/client",
+        "tsConfig": "mar4/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mar4:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mar4:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "mar4:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./mar4/src"
+}

@@ -1,0 +1,55 @@
+{
+  "name": "survey",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/survey/.nitro",
+        "{workspaceRoot}/dist/survey/ssr",
+        "{workspaceRoot}/dist/survey/analog"
+      ],
+      "options": {
+        "main": "survey/src/main.ts",
+        "configFile": "survey/vite.config.ts",
+        "outputPath": "dist/survey/client",
+        "tsConfig": "survey/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "survey:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "survey:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "survey:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./survey/src"
+}
