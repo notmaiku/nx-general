@@ -1,9 +1,10 @@
 
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AsyncPipe, CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
-import { shareReplay, Subject, switchMap, take } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { shareReplay, Subject, switchMap } from 'rxjs';
 import { injectTrpcClient } from '../../trpc-client';
+import { newfield } from '../models/newField';
 
 @Component({
   selector: 'dynamic-form',
@@ -14,45 +15,50 @@ import { injectTrpcClient } from '../../trpc-client';
   },
   template: `
 <main class="flex-1 mx-auto">
-
+  <h1>Form Builder</h1>
   <form
     class="mt-8 pb-2 flex items-center"
     #f="ngForm"
-    (ngSubmit)="addSurvey(f)"
+    (ngSubmit)="submit()"
   >
-    <ng-template *ngFor="let field of getKeys(formData)">
-      <label class="sr-only" for="dynForm" *ngIf="field == 'name'">name</label>
+    <section *ngFor="let newField of newForm; trackBy: getId">
         <input
         required
         autocomplete="off"
         name="dynForm"
-        [(ngModel)]="formData"
+        [(ngModel)]="newForm[newField.id]"
         class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
         />
-    </ng-template>
+    </section>
     <button
       class="ml-2 inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-zinc-100 hover:text-zinc-950 h-11 px-8 rounded-md"
+    (click)="newField()"
     >
       +
     </button>
   </form>
-/main>
+</main>
 `,
 })
-export class DynamicForm<T> {
-  @Input() formData: T | null = null;
+export class DynamicForm {
   private _trpc = injectTrpcClient();
   public triggerRefresh$ = new Subject<void>();
   public notes$ = this.triggerRefresh$.pipe(
     switchMap(() => this._trpc.note.list.query()),
     shareReplay(1)
   );
-  public newNote = '';
+  public newForm: newfield[] = [{ id: this.generateRandomId(), fieldName: '' }]
 
-  addSurvey() { }
-
-  getKeys(obj: any): string[] {
-    return Object.keys(obj)
+  newField() {
+    this.newForm.push({ id: this.generateRandomId(), fieldName: '' })
   }
 
+  getId(_index: number, field: any): number {
+    return field.id
+  }
+  submit() { }
+
+  generateRandomId(): number {
+    return Math.floor(Math.random() * 1000000); // Adjust the range as needed
+  }
 }
