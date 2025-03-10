@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 
 import { AnalogWelcomeComponent } from './analog-welcome.component';
@@ -5,14 +6,15 @@ import { DynamicForm } from '../components/form.component';
 import { Pokemon } from '../models/pokemon';
 
 @Component({
-  selector: 'survey-home',
+  selector: 'answering',
 
   imports: [AnalogWelcomeComponent, DynamicForm],
   template: `<div>
-    <dynamic-form [formData]="pokemon"></dynamic-form>
+    <h1>Survey</h1>
+    <dynamic-form [formData]="[{id: 1, fieldName: 'Favorite Pokemon'}]"></dynamic-form>
   </div>
 `,
 })
-export default class HomeComponent {
+export default class AnsweringPage {
   pokemon!: Pokemon
 }
