@@ -13,44 +13,44 @@ import { newfield } from '../models/newField';
       'flex min-h-screen flex-col text-zinc-900 bg-zinc-50 px-4 pt-8 pb-32',
   },
   template: `
-<main class="flex-1 mx-auto">
+<main class="flex-1 mx-auto flex-col">
   @if(getformDatalength() === 0){
-  <h1>Form Builder</h1>
-  <form
-    class="mt-8 pb-2 flex items-center"
-    #f="ngForm"
-    (ngSubmit)="submit()"
-  >
-    <section *ngFor="let newField of newForm; trackBy: getId">
-        <input
-        required
-        autocomplete="off"
-        name="dynForm"
-        [(ngModel)]="newForm[newField.id]"
-        class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
-        />
-    </section>
-    <button
-      class="ml-2 inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-zinc-100 hover:text-zinc-950 h-11 px-8 rounded-md"
-    (click)="newField()"
+    <form
+      class="mt-8 pb-2 flex items-center flex-col gap-2"
+      #f="ngForm"
+      (ngSubmit)="submit()"
     >
-      +
-    </button>
-  </form>
-  }@else{
-    <section *ngFor="let field of formData; trackBy: getId">
-      <h2>Survey</h2>
-    <label for="survey-field">{{field.fieldName}}</label>
+      <section *ngFor="let newField of newForm; trackBy: getId">
         <input
-        required
-        autocomplete="off"
-        name="survey-field"
-        [(ngModel)]="formData[field.id]"
-        class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
+          required
+          autocomplete="off"
+          name="dynForm"
+          [(ngModel)]="newForm[newField.id]"
+          class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
         />
-
+      </section>
+      <button
+        class="ml-2 inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-zinc-100 hover:text-zinc-950 h-11 px-8 rounded-md"
+        (click)="newField()"
+      >
+        +
+      </button>
+    </form>
+  }@else{
+    <section *ngFor="let field of formData; trackBy: getId" >
+      <article>
+        <h2>Survey</h2>
+        <label for="survey-field">{{field.fieldName}}</label>
+        <input
+          required
+          autocomplete="off"
+          name="survey-field"
+          [(ngModel)]="formData[field.id]"
+          class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
+        />
+      </article>
     </section>
-}
+  }
 </main>
 `,
 })
