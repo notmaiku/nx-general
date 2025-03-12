@@ -16,19 +16,22 @@ import { newfield } from '../models/newField';
   template: `
 <main class="flex-1 mx-auto flex-col">
   @if(getformDatalength() === 0){
+    <h2>Make form</h2>
+    {{f.form.valid}}
     <form
       class="mt-8 pb-2 flex items-center flex-col gap-2"
       #f="ngForm"
       (ngSubmit)="submit(f)"
     >
-      <button type="submit" [disabled]="!f.form.valid">Submit</button>
+      <button type="submit" class="border border-white py-2 px-3 rounded-sm" [disabled]="!f.form.valid">Submit</button>
       <section *ngFor="let newField of newForm; trackBy: getId">
         <input
           required
           autocomplete="off"
+          type="text"
           [name]="newField.fieldName"
           [(ngModel)]="newField.fieldName"
-          [ngModelOptions]="{standalone: true}"
+          pattern="[a-zA-Z ]*"
           class="w-full inline-flex items-center justify-center text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:text-zinc-950 h-11 px-2 rounded-md"
         />
       </section>
@@ -66,11 +69,12 @@ export class DynamicForm {
     shareReplay(1)
   );
   public surveyFields!: newfield[]
-  public newForm: newfield[] = [{ id: this.generateRandomId(), fieldName: '' }]
+  public initFieldName = 'enter a survey question'
+  public newForm: newfield[] = [{ id: this.generateRandomId(), fieldName: this.initFieldName }]
   public form!: NgForm
 
   newField() {
-    this.newForm.push({ id: this.generateRandomId(), fieldName: '' })
+    this.newForm.push({ id: this.generateRandomId(), fieldName: this.initFieldName })
   }
 
   getId(_index: number, field: any): number {
@@ -79,9 +83,9 @@ export class DynamicForm {
   getformDatalength() {
     return this.formData.length
   }
-  submit(form: NgForm) {
-    if (form.valid)
-      console.log(this.newForm)
+  submit(dynForm: NgForm) {
+    if (dynForm.form.valid)
+      console.log('submit', this.newForm)
   }
 
   generateRandomId(): number {
