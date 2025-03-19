@@ -1,0 +1,55 @@
+{
+  "name": "dynReactiveForm",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      },
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/dyn-reactive-form/.nitro",
+        "{workspaceRoot}/dist/dyn-reactive-form/ssr",
+        "{workspaceRoot}/dist/dyn-reactive-form/analog"
+      ],
+      "options": {
+        "main": "dyn-reactive-form/src/main.ts",
+        "configFile": "dyn-reactive-form/vite.config.ts",
+        "outputPath": "dist/dyn-reactive-form/client",
+        "tsConfig": "dyn-reactive-form/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "dyn-reactive-form:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dyn-reactive-form:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "dyn-reactive-form:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@analogjs/vitest-angular:test",
+      "outputs": ["{projectRoot}/coverage"]
+    }
+  },
+  "tags": [],
+  "sourceRoot": "./dyn-reactive-form/src"
+}
