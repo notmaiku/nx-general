@@ -41,7 +41,7 @@ export interface JsonFormData {
 })
 export class JsonFormComponent implements OnInit {
 
-  @Input() jsonFormData: JsonFormData;
+  @Input() jsonFormData!: JsonFormData;
 
   constructor() { }
 
