@@ -10,7 +10,6 @@ import { waitFor } from '@analogjs/trpc';
   imports: [JsonFormComponent],
   template: `
 <div *ngIf="form$ | async as data; else loading">
-  test
   <app-json-form [jsonFormData]="data"/>
 </div>
 <ng-template #loading>
