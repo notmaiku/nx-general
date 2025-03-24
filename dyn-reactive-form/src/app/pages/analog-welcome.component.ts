@@ -393,6 +393,8 @@ import { Note } from '../../note';
           </div>
         </div>
         <ng-template #loading>
+          <p class="loading-text">Dude what conflict</p>
+          <p class="loading-text">Loading...</p>
           <p class="loading-text">Loading...</p>
         </ng-template>
       </section>
