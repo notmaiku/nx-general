@@ -44,7 +44,7 @@ import { RouterLink } from '@angular/router';
       </div>
     </div>
     <ng-template #loading>
-      <p>Loading...</p>
+      <p>Loading</p>
     </ng-template>
   </section>
 </main>
