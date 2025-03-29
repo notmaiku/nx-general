@@ -19,6 +19,7 @@ import { waitFor } from '@analogjs/trpc';
 })
 export default class HomeComponent {
   constructor() {
+    console.log('test')
     void waitFor(this.form$);
     this.triggerRefresh$.next();
   }
