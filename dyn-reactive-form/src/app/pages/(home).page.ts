@@ -13,7 +13,7 @@ import { waitFor } from '@analogjs/trpc';
   <app-json-form [jsonFormData]="data"/>
 </div>
 <ng-template #loading>
-  <p>Loading Stuff...</p>
+  <p>Loading Stuff one</p>
 </ng-template>
 `,
 })
